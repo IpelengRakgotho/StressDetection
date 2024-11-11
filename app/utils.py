@@ -1,11 +1,19 @@
 import firebase_admin
-from firebase_admin import credentials
+from firebase_admin import credentials, firestore, storage
+import streamlit as st
+import json
 
 def initialize_firebase():
-    if not firebase_admin._apps:  # Ensure Firebase is initialized only once
-        # Use a raw string or forward slashes in the file path
-        cred = credentials.Certificate(r"app/stressguard-firebase-adminsdk-5rxfz-0582c96f1b.json")
+    if not firebase_admin._apps:  # Initialize Firebase only once
+        # Parse the JSON from Streamlit secrets
+        firebase_creds = json.loads(st.secrets["firebase_credentials"])
+        cred = credentials.Certificate(firebase_creds)
         
         firebase_admin.initialize_app(cred, {
-            'storageBucket': 'stressguard.appspot.com'
+            'storageBucket': f"{firebase_creds['project_id']}.appspot.com"
         })
+    
+    # Initialize Firestore client and Storage bucket
+    db = firestore.client()
+    bucket = storage.bucket()
+    return db, bucket
