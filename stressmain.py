@@ -8,13 +8,13 @@ from app.about import about_page
 from app.user import user_page
 
 def app():
+    
     # Background image styling for main content and sidebar
     page_bg_img = """
     <style>
     /* Main content background */
     [data-testid="stAppViewContainer"] {
         background-image: url("https://www.zmo.ai/wp-content/uploads/2023/09/png-transparent-abstract-blue-background-wave.png");
-        
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -41,8 +41,21 @@ def app():
     }
     </style>
     """
+
+    # Custom CSS to hide "Share" and "GitHub" icons
+    hide_icons_css = """
+    <style>
+    header > div:nth-child(2) > button,
+    header > div:nth-child(2) > div {
+        display: none !important;
+    }
+    </style>
+    """
     
+    # Apply background styling and hide icons
     st.markdown(page_bg_img, unsafe_allow_html=True)
+    st.markdown(hide_icons_css, unsafe_allow_html=True)
+
     st.markdown("# *StressGuard*")
 
     # Sidebar navigation
