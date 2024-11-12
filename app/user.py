@@ -86,8 +86,9 @@ def plot_stress_evolution():
         st.warning("No data available to plot.")
 
 def user_page():
-    st.header("Stress Detection")
-    st.subheader("You can only improve what you measure ~ Peter Drucker")
+    #st.header("Stress Detection")
+    st.markdown("### *StressGuard*", unsafe_allow_html=True)
+
 
     # Get the trained model from session state
     model = st.session_state.get('trained_model', None)

@@ -39,6 +39,13 @@ def app():
     [data-testid="stToolbar"] {
         right: 2rem;
     }
+
+    /* Custom border color for input fields and buttons when focused */
+    input:focus, textarea:focus, select:focus, button:focus {
+        border: 2px solid #00008B !important; /* Dark blue border */
+        box-shadow: 0 0 5px rgba(0, 0, 139, 0.5) !important; /* Dark blue shadow */
+        outline: none !important;
+    }
     </style>
     """
 
@@ -52,11 +59,12 @@ def app():
     </style>
     """
     
-    # Apply background styling and hide icons
+    # Apply background styling, hide icons, and add custom border styling
     st.markdown(page_bg_img, unsafe_allow_html=True)
     st.markdown(hide_icons_css, unsafe_allow_html=True)
 
-    st.markdown("# *StressGuard*")
+    # Display title with smaller, italic style
+    st.markdown("### *StressGuard*", unsafe_allow_html=True)
 
     # Sidebar navigation
     page = st.sidebar.selectbox('Navigate', ['Login', 'About'])
