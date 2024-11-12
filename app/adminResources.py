@@ -1,6 +1,8 @@
 import streamlit as st
 from firebase_admin import firestore
 
+# This method enables the admin to load, edit and delete resourses
+# Resources can be in a form of videos or written text
 def admin_resources_page():
     st.header("Manage Stress Resources")
 
@@ -48,5 +50,5 @@ def admin_resources_page():
         if st.button("Delete Resource"):
             resources_ref.document(selected_resource_id).delete()
             st.success("Resource deleted successfully!")
-            #st.experimental_rerun()
+         
 

@@ -42,7 +42,7 @@ def app():
     </style>
     """
 
-    # Custom CSS to hide "Share" and "GitHub" icons
+    # Hide unwanted icons the were appearing after deploying the app
     hide_icons_css = """
     <style>
     header > div:nth-child(2) > button,
@@ -52,7 +52,7 @@ def app():
     </style>
     """
     
-    # Apply background styling and hide icons
+    # background styling and hide icons
     st.markdown(page_bg_img, unsafe_allow_html=True)
     st.markdown(hide_icons_css, unsafe_allow_html=True)
 

@@ -12,7 +12,7 @@ def about_page():
         - View historical stress levels with a line graph.
         - Receive personalized stress management tips.
         \n
-        **Developed by:** Your Name
+        **Developed by:** Lerato Rakgotho
         \n
-        For more information, please contact [your email](mailto:your.email@example.com).
+        For more information, please contact lerato.rakgotho@gmail.com
     """)

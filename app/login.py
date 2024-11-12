@@ -8,7 +8,7 @@ from app.userResources import user_resources_page
 from app.utils import initialize_firebase
 
 admin_email = "admin@gmail.com"
-firebase_api_key = "AIzaSyDgU2nNEQr1AvnY5_NJd-56AixMGAkLXIM"  # Replace with your Firebase API Key
+firebase_api_key = "AIzaSyDgU2nNEQr1AvnY5_NJd-56AixMGAkLXIM"  #Firebase API Key
 
 def login_page():
 
@@ -20,7 +20,7 @@ def login_page():
 
     def login(email, password):
         try:
-            # Use Firebase Authentication REST API for email and password login
+            # Firebase Authentication REST API for email and password login
             url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={firebase_api_key}"
             payload = {
                 "email": email,
@@ -62,11 +62,9 @@ def login_page():
             password = st.text_input('Password', type='password')
             st.button('Login', on_click=lambda: login(email, password))
         else: 
-            # Signup form (same as before)
+            # Signup form 
             name = st.text_input('Name')
             surname = st.text_input('Surname') 
-            #gender = st.text_input('Gender')
-            #age = st.text_input('Age')
             email = st.text_input('Email')
             username = st.text_input('Username')
             password = st.text_input('Password', type='password')
@@ -74,15 +72,13 @@ def login_page():
 
             if password == confirmPassword and st.button('Submit'):
                 try:
-                    # Create Firebase Auth user
+                    # Creating Firebase Auth user
                     user = auth.create_user(email=email, password=password, uid=username)
 
-                    # Store additional details in Firestore
+                    # store details in users table
                     user_data = {
                         'name': name,
                         'surname': surname,
-                        #'gender': gender,
-                        #'age': age,
                         'email': email,
                         'username': username
                     }
@@ -95,17 +91,14 @@ def login_page():
 
     # If user is signed in, allow them to enter health data
     if st.session_state.signout:
-        # Sidebar logout button
         st.sidebar.text(f"Welcome, {st.session_state.username}")
         st.sidebar.button('Sign out', on_click=signout)
-
+         #if the logged in user is an Admin then display Admin Dashboard
         if st.session_state.is_admin:
-            #st.subheader("Admin Dashboard")
             admin_page()
             st.subheader("Manage Resources")
             admin_resources_page()
         else:
-            #st.subheader("User Dashboard")
+             #display User Dashboard
             user_page()
-            #st.subheader("View Resources")
             user_resources_page()

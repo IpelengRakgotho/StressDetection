@@ -75,7 +75,7 @@ def train_model(cleaned_dataset1, cleaned_dataset2):
         st.error(f"Target column {target} not found in dataset!")
         return None
 
-    # Encode categorical features (e.g., gender)
+    # Encode categorical features (gender)
     le = LabelEncoder()
     combined_dataset['Gender'] = le.fit_transform(combined_dataset['Gender'].astype(str))
 
@@ -99,9 +99,9 @@ def train_model(cleaned_dataset1, cleaned_dataset2):
 
 
 
-
+  # Save datasets to Firebase Storage
 def save_dataset_to_firebase(df, dataset_name):
-    # Save dataset to Firebase Storage
+  
     bucket = storage.bucket()
     blob = bucket.blob(f"datasets/{dataset_name}.csv")
     csv_data = df.to_csv(index=False)

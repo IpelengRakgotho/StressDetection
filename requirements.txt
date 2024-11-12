@@ -1,3 +1,4 @@
 
+# download dependencies when deploying the web app
 firebase-admin
 scikit-learn

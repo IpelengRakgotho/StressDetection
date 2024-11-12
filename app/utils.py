@@ -4,8 +4,8 @@ import streamlit as st
 import json
 
 def initialize_firebase():
-    if not firebase_admin._apps:  # Initialize Firebase only once
-        # Parse the JSON from Streamlit secrets
+    if not firebase_admin._apps:  # Initialize Firebase 
+        # Parse the JSON from Streamlit secrets, stored the secrets in Streamlit
         firebase_creds = json.loads(st.secrets["firebase_credentials"])
         cred = credentials.Certificate(firebase_creds)
         

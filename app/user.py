@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime
 from app.utils import initialize_firebase
 
-# Initialize Firebase (make sure this is done only once in your application)
+# Initialize Firebase 
 initialize_firebase()
 
 def save_to_firebase(user_data, prediction):
@@ -24,12 +24,12 @@ def save_to_firebase(user_data, prediction):
         'hours_of_sleep': float(user_data['hours_of_sleep'][0]),
         'blood_oxygen': int(user_data['blood_oxygen'][0]),
         'Predicted_Stress_Level': int(prediction[0]),  # Save numeric prediction for aggregation
-        'timestamp': pd.Timestamp.now()  # Save the timestamp
+        'timestamp': pd.Timestamp.now()  
     }
     
     # Save the data to Firestore
     db.collection('user_predictions').document(doc_id).set(data)
-
+# Interpret the stress levels to realistic names
 def map_stress_level_to_label(stress_level):
     if stress_level == 0:
         return "No Stress - Fully relaxed, no tension or concerns"
@@ -62,11 +62,11 @@ def plot_stress_evolution():
 
         # Convert Firestore timestamp (DatetimeWithNanoseconds) to Python date
         timestamp = doc_data['timestamp']
-        timestamp_date = datetime.fromtimestamp(timestamp.timestamp()).date()  # Convert to date only
+        timestamp_date = datetime.fromtimestamp(timestamp.timestamp()).date()  
 
         data_list.append({
             'date': timestamp_date,
-            'Predicted_Stress_Level': doc_data['Predicted_Stress_Level']  # Numeric data for aggregation
+            'Predicted_Stress_Level': doc_data['Predicted_Stress_Level'] 
         })
     
     # Convert list to DataFrame
@@ -74,7 +74,7 @@ def plot_stress_evolution():
         df = pd.DataFrame(data_list)
         df.set_index('date', inplace=True)
 
-        # Ensure 'Predicted_Stress_Level' is numeric
+        # Stress levels are stored as numerics
         df['Predicted_Stress_Level'] = pd.to_numeric(df['Predicted_Stress_Level'], errors='coerce')
 
         # Group by date and calculate the mean stress level for each date
@@ -103,9 +103,9 @@ def user_page():
 
     # Define normal heart rate range based on age
     if Age < 18:
-        normal_range = (70, 100)  # Example range for children/teens
+        normal_range = (70, 100)  # range for children/teens
     else:
-        normal_range = (60, 100)  # Example range for adults
+        normal_range = (60, 100)  # range for adults
 
     # Check if heart rate is within normal range
     if heart_rate > 0:  # Only check if a heart rate is entered
@@ -117,7 +117,7 @@ def user_page():
     hours_of_sleep = st.number_input("Hours of Sleep", min_value=0.0, max_value=12.0, step=0.1)
     blood_oxygen = st.number_input("Blood Oxygen", min_value=0, max_value=100, step=1)
       
-    # Check if blood oxygen is within the normal range
+    # Check if blood oxygen is within the normal range of 95% - 100%
     if blood_oxygen > 0:  # Only check if a blood oxygen level is entered
         if 95 <= blood_oxygen <= 100:
             st.success("Your blood oxygen level is within the normal range.")
@@ -140,12 +140,12 @@ def user_page():
         stress_prediction = model.predict(user_input)
         stress_label = map_stress_level_to_label(stress_prediction[0])
         
-        # Display the prediction as a descriptive label with bold and larger font
+        # Display the prediction
         st.markdown(f"<p style='font-size:24px; font-weight:bold;'>Predicted Stress Level: {stress_label}</p>", unsafe_allow_html=True)
         
         # Save user data and numeric prediction to Firebase
         save_to_firebase(user_input, stress_prediction)
     
-    # Plot stress level evolution over time
+    # Graph to display the stress level evolution over time
     st.subheader("Stress Level Evolution Over Time")
     plot_stress_evolution()
