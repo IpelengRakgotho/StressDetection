@@ -10,7 +10,7 @@ def about_page():
         **Features:**
         - Predict stress levels based on smartwatch data.
         - View historical stress levels with a line graph.
-        - Receive personalized stress management tips.
+        - Stress management tips.
         \n
         **Developed by:** Lerato Rakgotho
         \n
