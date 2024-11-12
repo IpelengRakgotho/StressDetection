@@ -3,9 +3,11 @@ base="light"
 
 [server]
 enableXsrfProtection=false
+enableCORS=false
 
 [browser]
 gatherUsageStats = false
 
-[global]
-hideShareButton = true
+[ui]
+hideMenuItems = true
+hideSidebarNav = true
