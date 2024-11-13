@@ -93,7 +93,7 @@ def train_model(cleaned_dataset1, cleaned_dataset2):
     # Make predictions and evaluate the model
     y_pred = rf_model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
-    st.write(f"Model Accuracy: {accuracy:.2f}")
+    #st.write(f"Model Accuracy: {accuracy:.2f}")
 
     return rf_model
 
